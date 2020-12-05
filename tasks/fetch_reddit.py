@@ -1,23 +1,21 @@
 import concurrent.futures
 import configparser
-import logging
 import praw
+import logging
 
 import datetime as dt
 import numpy as np
 from sqlalchemy.engine import create_engine
 from sqlalchemy.orm import Session
 from sqlalchemy.dialects.postgresql import insert
-from sqlalchemy.sql.base import Executable
-from typing_extensions import final
 
 from . import models as m
+
 # import models as m
 from typing import Dict
 from praw.models import Redditor, Submission, Comment
 from psaw import PushshiftAPI
 
-logging.getLogger().setLevel(logging.ERROR)
 
 def parse_redditor(redditor: Redditor) -> Dict[str, any]:
     if not redditor or not hasattr(redditor, "id") or not redditor.id:
@@ -175,15 +173,30 @@ class RedditScraper:
             self.session.rollback()
         finally:
             self.session.close()
+        return len(redditor_subreddit_submissions), len(redditor_subreddit_comments)
 
 
 def scrape(subreddit_list, ds, after, before, config):
-    rs = RedditScraper(subreddit_list, ds, after, before, config)
+    logging.critical(f"Scraping for between {before} and {after} started")
+    rs = RedditScraper(
+        subreddit_list, ds, int(after.timestamp()), int(before.timestamp()), config
+    )
     rs.get_submissions()
-    rs.upload_submission()
+    len_submissions, len_comments = rs.upload_submission()
+    logging.critical(
+        f"Scraping for between {before} and {after} fetched {len_submissions} submissions and {len_comments} comments"
+    )
 
 
-def fetch_reddit(ds, after, before, config):
+def fetch_reddit(now):
+    cur = dt.datetime.now()
+    logging.critical("Fetching reddit information started")
+    before = dt.datetime(now.year, now.month, now.day)
+    after = before + dt.timedelta(minutes=-10)
+    ds = after.strftime("%Y-%m-%d")
+
+    config = configparser.ConfigParser()
+    config.read("config/config.ini")
     num_threads = int(config["REDDIT"].get("num_threads"))
     subreddit_list_path = config["REDDIT"].get("subreddit_list_path")
     with open(subreddit_list_path) as f:
@@ -195,21 +208,18 @@ def fetch_reddit(ds, after, before, config):
     with concurrent.futures.ThreadPoolExecutor() as executor:
         for subreddit_list in subreddit_lists:
             executor.submit(scrape, subreddit_list, ds, after, before, config)
+    logging.critical(
+        f"Fetching reddit information ended in {(dt.datetime.now()-cur).total_seconds()}"
+    )
 
 
 if __name__ == "__main__":
     config = configparser.ConfigParser()
     config.read("config/config.ini")
     for i in range(12, 13):
-        for j in range(2, 32):
-            for k in range(0, 23):
-                after = int(dt.datetime(2020, i, j, k).timestamp())
-                before = int(dt.datetime(2020, i, j, k + 1).timestamp())
-                ds = dt.datetime(2020, i, j).strftime("%Y-%m-%d")
-                print(ds)
+        for j in range(3, 32):
+            for k in range(0, 24):
                 a = dt.datetime.now()
-                fetch_reddit(
-                    ds, after, before, config
-                )
+                fetch_reddit(dt.datetime(2020, i, j, k))
                 b = dt.datetime.now()
                 print((b - a).total_seconds())
