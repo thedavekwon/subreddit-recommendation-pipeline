@@ -2,10 +2,20 @@ import datetime as dt
 import time
 import concurrent.futures
 import logging
+import copy
 
 import schedule
 import networkx as nx
 import matplotlib.pyplot as plt
+
+logging.getLogger().setLevel(logging.CRITICAL)
+LOG_FORMAT = "%(asctime)-15s %(message)s"
+logging.basicConfig(format=LOG_FORMAT)
+fh = logging.FileHandler("log/log.log")
+fh.setLevel(logging.CRITICAL)
+fh.setFormatter(logging.Formatter(LOG_FORMAT))
+logging.getLogger().addHandler(fh)
+
 
 class Task:
     def __init__(self, id, task, params, dag, need_dt=False):
@@ -22,7 +32,6 @@ class Task:
         if not self.params:
             self.params = []
         self.need_dt = need_dt
-        dag.finished_tasks[id] = 0
         dag.tasks[id] = self
 
     def add_edge(self, task):
@@ -48,7 +57,6 @@ class DAG:
         self.inverted_adj_list = {}
         self.inverted_adj_list_temp = {}
         self.tasks = {}
-        self.finished_tasks = {}
 
         # For visualization
         self.nx_graph = nx.DiGraph()
@@ -75,9 +83,9 @@ class DAG:
         return False
 
     def check_cycle(self):
-        visited = self.finished_tasks.copy()
-        curstack = self.finished_tasks.copy()
-        for v in self.finished_tasks.keys():
+        visited = dict.fromkeys(self.tasks.keys(), 0)
+        curstack = dict.fromkeys(self.tasks.keys(), 0)
+        for v in self.tasks.keys():
             if not visited[v]:
                 if self.dfs(v, visited, curstack) == True:
                     return True
@@ -91,8 +99,8 @@ class DAG:
     def get_initial_tasks(self):
         return [
             task
-            for task in self.finished_tasks.keys()
-            if task not in self.inverted_adj_list
+            for task in self.tasks.keys()
+            if task not in self.inverted_adj_list_temp
         ]
 
     def update_task(self, task):
@@ -100,11 +108,13 @@ class DAG:
             if task in self.inverted_adj_list_temp[t]:
                 self.inverted_adj_list_temp[t].remove(task)
 
-    def get_ready_task(self, waiting_tasks):
+    def get_ready_task(self, waiting_tasks, future_to_task):
         return [
             task
             for task in self.inverted_adj_list_temp.keys()
-            if len(self.inverted_adj_list_temp[task]) == 0 and task in waiting_tasks
+            if len(self.inverted_adj_list_temp[task]) == 0
+            and task in waiting_tasks
+            and task not in future_to_task.values()
         ]
 
     def insert_tasks(self, executor, future_to_task, ready_tasks, now):
@@ -125,19 +135,20 @@ class DAG:
                         *task_node.params,
                     )
                 ] = task
-            ready_tasks.remove(task)
 
     def run(self):
-        logging.critical('DAG started')
+        logging.critical("DAG started")
+        
+        # Get current timestamp
         now = dt.datetime.now()
 
         executor = concurrent.futures.ProcessPoolExecutor()
+
         # Reset
-        self.finished_tasks = dict.fromkeys(self.finished_tasks, 0)
-        self.inverted_adj_list_temp = self.inverted_adj_list.copy()
+        self.inverted_adj_list_temp = copy.deepcopy(self.inverted_adj_list)
 
         # All tasks
-        tasks = list(self.finished_tasks.keys())
+        tasks = list(self.tasks.keys())
         future_to_task = {}
         ready_tasks = self.get_initial_tasks()
 
@@ -150,14 +161,14 @@ class DAG:
                     continue
                 tasks.remove(task)
                 self.update_task(task)
-                ready_tasks += self.get_ready_task(tasks)
+                ready_tasks = self.get_ready_task(tasks, future_to_task)
                 self.insert_tasks(executor, future_to_task, ready_tasks, now)
-
         executor.shutdown()
-        logging.critical('DAG ended')
+        logging.critical("DAG ended")
 
     def run_scheduler(self):
-        schedule.every(self.hour).minutes.do(self.run)
+        logging.critical("Scheduler Started")
+        schedule.every(self.hour).hour.at(":00").do(self.run)
         while True:
             schedule.run_pending()
             time.sleep(1)

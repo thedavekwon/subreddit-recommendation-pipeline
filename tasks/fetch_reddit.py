@@ -23,17 +23,6 @@ def parse_redditor(redditor: Redditor) -> Dict[str, any]:
     return {"id": redditor.id, "name": redditor.name}
 
 
-def parse_comment(comment: Comment) -> Dict[str, any]:
-    if not comment or not hasattr(comment, "id") or not comment.id:
-        raise Exception("Reddit comment deleted")
-    return {
-        "id": comment.id,
-        "created_utc": comment.created_utc,
-        "author": parse_redditor(comment.author),
-        "score": comment.score,
-    }
-
-
 class RedditSubmission:
     def __init__(self, submission: Submission):
         self.submission = submission
@@ -75,14 +64,13 @@ class RedditScraper:
             ),
         )
 
-    def upload_submission(self):
+    def upload(self, only_comment):
         redditors = {}
         submissions = {}
         subreddits = {}
         comments = {}
         redditor_subreddit_comments = {}
         redditor_subreddit_submissions = {}
-
         for s in self.submissions:
             try:
                 if (
@@ -95,21 +83,22 @@ class RedditScraper:
                     or not s.author.id
                 ):
                     continue
-                redditors[s.author.id] = parse_redditor(s.author)
-                submissions[s.submission.id] = {
-                    "id": s.submission.id,
-                    "score": s.submission.score,
-                }
-                subreddits[s.subreddit.id] = {
-                    "id": s.subreddit.id,
-                    "name": s.subreddit.display_name,
-                }
-                redditor_subreddit_submissions[s.submission.id] = {
-                    "redditor_id": s.author.id,
-                    "subreddit_id": s.subreddit.id,
-                    "submission_id": s.submission.id,
-                    "ds": self.ds,
-                }
+                if not only_comment:
+                    redditors[s.author.id] = parse_redditor(s.author)
+                    submissions[s.submission.id] = {
+                        "id": s.submission.id,
+                        "score": s.submission.score,
+                    }
+                    subreddits[s.subreddit.id] = {
+                        "id": s.subreddit.id,
+                        "name": s.subreddit.display_name,
+                    }
+                    redditor_subreddit_submissions[s.submission.id] = {
+                        "redditor_id": s.author.id,
+                        "subreddit_id": s.subreddit.id,
+                        "submission_id": s.submission.id,
+                        "ds": self.ds,
+                    }
                 for c in s.comments:
                     if (
                         not c
@@ -124,7 +113,11 @@ class RedditScraper:
                         "submission_id": s.submission.id,
                         "score": c.score,
                     }
-                    redditors[c.author.id] = {"id": c.author.id, "name": c.author.name}
+                    subreddits[s.subreddit.id] = {
+                        "id": s.subreddit.id,
+                        "name": s.subreddit.display_name,
+                    }
+                    redditors[c.author.id] = parse_redditor(c.author)
                     redditor_subreddit_comments[c.id] = {
                         "redditor_id": c.author.id,
                         "subreddit_id": s.subreddit.id,
@@ -135,6 +128,10 @@ class RedditScraper:
                 logging.warning(f"An error has occured while parsing: {e}")
                 continue
 
+        if not redditor_subreddit_comments and not redditor_subreddit_submissions:
+            return len(redditor_subreddit_submissions), len(redditor_subreddit_comments)
+
+        # PostgreSQL upsert
         # https://docs.sqlalchemy.org/en/13/dialects/postgresql.html#insert-on-conflict-upsert
         try:
             self.session.execute(
@@ -142,11 +139,17 @@ class RedditScraper:
                 .values(list(redditors.values()))
                 .on_conflict_do_nothing()
             )
-            self.session.execute(
-                insert(m.Submission)
-                .values(list(submissions.values()))
-                .on_conflict_do_nothing()
-            )
+            if not only_comment:
+                self.session.execute(
+                    insert(m.Submission)
+                    .values(list(submissions.values()))
+                    .on_conflict_do_nothing()
+                )
+                self.session.execute(
+                    insert(m.Redditor_Subreddit_Submission)
+                    .values(list(redditor_subreddit_submissions.values()))
+                    .on_conflict_do_nothing()
+                )
             self.session.execute(
                 insert(m.Subreddit)
                 .values(list(subreddits.values()))
@@ -155,11 +158,6 @@ class RedditScraper:
             self.session.execute(
                 insert(m.Comment)
                 .values(list(comments.values()))
-                .on_conflict_do_nothing()
-            )
-            self.session.execute(
-                insert(m.Redditor_Subreddit_Submission)
-                .values(list(redditor_subreddit_submissions.values()))
                 .on_conflict_do_nothing()
             )
             self.session.execute(
@@ -176,50 +174,59 @@ class RedditScraper:
         return len(redditor_subreddit_submissions), len(redditor_subreddit_comments)
 
 
-def scrape(subreddit_list, ds, after, before, config):
-    logging.critical(f"Scraping for between {before} and {after} started")
-    rs = RedditScraper(
-        subreddit_list, ds, int(after.timestamp()), int(before.timestamp()), config
-    )
-    rs.get_submissions()
-    len_submissions, len_comments = rs.upload_submission()
-    logging.critical(
-        f"Scraping for between {before} and {after} fetched {len_submissions} submissions and {len_comments} comments"
-    )
+def scrape(only_comment, subreddit_list, ds, after, before, config):
+    temp_str = "all" if not only_comment else "comment"
+    try:
+        logging.critical(
+            f"Scraping {temp_str} for between {after} and {before} started"
+        )
+        rs = RedditScraper(
+            subreddit_list, ds, int(after.timestamp()), int(before.timestamp()), config
+        )
+        rs.get_submissions()
+        len_submissions, len_comments = rs.upload(only_comment)
+        logging.critical(
+            f"Scraping {temp_str} for between {after} and {before} fetched {len_submissions} submissions and {len_comments} comments"
+        )
+    except Exception as e:
+        logging.error(
+            f"An error has occurred for Scraping {temp_str} for between {after} and {before}: {e}"
+        )
 
 
-def fetch_reddit(now):
+def fetch_reddit(only_comment, now):
     cur = dt.datetime.now()
     logging.critical("Fetching reddit information started")
-    before = dt.datetime(now.year, now.month, now.day)
-    after = before + dt.timedelta(minutes=-10)
-    ds = after.strftime("%Y-%m-%d")
+    delta = dt.timedelta(hours=-1) if not only_comment else dt.timedelta(days=-3)
+    before = dt.datetime(now.year, now.month, now.day, now.hour) + delta
+    after = before + dt.timedelta(hours=-1)
+    ds = now.strftime("%Y-%m-%d")
 
     config = configparser.ConfigParser()
     config.read("config/config.ini")
     num_threads = int(config["REDDIT"].get("num_threads"))
     subreddit_list_path = config["REDDIT"].get("subreddit_list_path")
     with open(subreddit_list_path) as f:
-        subreddit_list = f.readline().split(",")
-
-    if not subreddit_list:
+        subreddit_list = np.array(f.readline().split(","))
+    np.random.shuffle(subreddit_list)
+    if not len(subreddit_list):
         raise Exception("Empty subreddit list")
     subreddit_lists = np.array_split(subreddit_list, num_threads)
     with concurrent.futures.ThreadPoolExecutor() as executor:
         for subreddit_list in subreddit_lists:
-            executor.submit(scrape, subreddit_list, ds, after, before, config)
+            executor.submit(
+                scrape, only_comment, subreddit_list, ds, after, before, config
+            )
     logging.critical(
-        f"Fetching reddit information ended in {(dt.datetime.now()-cur).total_seconds()}"
+        f"Fetching reddit information ended in {round((dt.datetime.now()-cur).total_seconds(), 2)}s"
     )
 
 
 if __name__ == "__main__":
+    logging.getLogger().setLevel(logging.ERROR)
     config = configparser.ConfigParser()
     config.read("config/config.ini")
-    for i in range(12, 13):
-        for j in range(3, 32):
-            for k in range(0, 24):
-                a = dt.datetime.now()
-                fetch_reddit(dt.datetime(2020, i, j, k))
-                b = dt.datetime.now()
-                print((b - a).total_seconds())
+    # for i in range(12, 13):
+    #     for j in range(5, 32):
+    #         for k in range(0, 24):
+    #             fetch_reddit(False, dt.datetime(2020, i, j, k))

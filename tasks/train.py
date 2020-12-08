@@ -29,22 +29,26 @@ def train_implicit():
         .subquery()
     )
     redditor_subreddit_comment = np.array(
-        session.query(m.Redditor_Subreddit_Comment.redditor_id, m.Subreddit.name)
+        session.query(
+            m.Redditor_Subreddit_Comment.redditor_id, m.Subreddit.name, m.Redditor.name
+        )
+        .distinct(m.Redditor_Subreddit_Comment.redditor_id, m.Subreddit.name)
         .filter(m.Redditor_Subreddit_Comment.redditor_id.in_(s))
         .join(m.Subreddit, m.Redditor_Subreddit_Comment.subreddit_id == m.Subreddit.id)
+        .join(m.Redditor, m.Redditor_Subreddit_Comment.redditor_id == m.Redditor.id)
         .all()
     ).T
     df = pd.DataFrame(
         {
-            "userID": redditor_subreddit_comment[0],
-            "subredditID": redditor_subreddit_comment[1],
+            "user_id": redditor_subreddit_comment[0],
+            "subreddit_id": redditor_subreddit_comment[1],
             "rating": np.ones_like(redditor_subreddit_comment[0]),
         }
     )
     df["rating"] = pd.to_numeric(df["rating"])
     df = df.pivot_table(
-        index="userID",
-        columns="subredditID",
+        index="user_id",
+        columns="subreddit_id",
         values=["rating"],
         aggfunc="mean",
         fill_value=0,
@@ -57,12 +61,12 @@ def train_implicit():
         db=config["REDIS"].get("db"),
     )
 
-    model = implicit.als.AlternatingLeastSquares(factors=100)
+    model = implicit.als.AlternatingLeastSquares(factors=100, iterations=30)
     user_item = scipy.sparse.csr_matrix(df.values)
     ratings = scipy.sparse.csr_matrix(df.values.T)
 
     # bm25 weights
-    ratings = (bm25_weight(ratings, B=0.9) * 5).tocsr()
+    ratings = (bm25_weight(ratings)).tocsr()
     model.fit(ratings)
     logging.critical("Training for implicit recommendation model ended")
     logging.critical("Loading Reddit Recommendation to Redis started")
