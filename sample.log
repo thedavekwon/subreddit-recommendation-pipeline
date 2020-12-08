@@ -1,0 +1,225 @@
+2020-12-07 20:32:57,943 Scheduler Started
+2020-12-07 21:00:00,583 DAG started
+2020-12-07 21:00:00,657 Creating full tables with sql/subreddit_stage.sql started
+2020-12-07 21:00:00,983 Successfully created full tables with sql/subreddit_stage.sql
+2020-12-07 21:00:00,983 Creating full tables with sql/subreddit_stage.sql ended
+2020-12-07 21:00:00,984 Creating parition tables for ds(2020-12-07) started
+2020-12-07 21:00:00,994 Successfully created partition table for ds(2020-12-07)
+2020-12-07 21:00:00,994 Creating parition tables for ds(2020-12-07) ended
+2020-12-07 21:00:01,987 Fetching reddit information started
+2020-12-07 21:00:01,987 Fetching reddit information started
+2020-12-07 21:00:01,993 Scraping all for between 2020-12-07 19:00:00 and 2020-12-07 20:00:00 started
+2020-12-07 21:00:01,994 Scraping comment for between 2020-12-04 20:00:00 and 2020-12-04 21:00:00 started
+2020-12-07 21:00:01,994 Scraping all for between 2020-12-07 19:00:00 and 2020-12-07 20:00:00 started
+2020-12-07 21:00:01,996 Scraping comment for between 2020-12-04 20:00:00 and 2020-12-04 21:00:00 started
+2020-12-07 21:00:01,997 Scraping all for between 2020-12-07 19:00:00 and 2020-12-07 20:00:00 started
+2020-12-07 21:00:01,997 Scraping comment for between 2020-12-04 20:00:00 and 2020-12-04 21:00:00 started
+2020-12-07 21:00:01,999 Scraping all for between 2020-12-07 19:00:00 and 2020-12-07 20:00:00 started
+2020-12-07 21:00:01,999 Scraping comment for between 2020-12-04 20:00:00 and 2020-12-04 21:00:00 started
+2020-12-07 21:00:02,010 Scraping all for between 2020-12-07 19:00:00 and 2020-12-07 20:00:00 started
+2020-12-07 21:00:02,009 Scraping comment for between 2020-12-04 20:00:00 and 2020-12-04 21:00:00 started
+2020-12-07 21:00:02,011 Scraping comment for between 2020-12-04 20:00:00 and 2020-12-04 21:00:00 started
+2020-12-07 21:00:02,013 Scraping all for between 2020-12-07 19:00:00 and 2020-12-07 20:00:00 started
+2020-12-07 21:00:02,013 Scraping comment for between 2020-12-04 20:00:00 and 2020-12-04 21:00:00 started
+2020-12-07 21:00:02,027 Scraping all for between 2020-12-07 19:00:00 and 2020-12-07 20:00:00 started
+2020-12-07 21:00:02,043 Scraping all for between 2020-12-07 19:00:00 and 2020-12-07 20:00:00 started
+2020-12-07 21:00:02,045 Scraping all for between 2020-12-07 19:00:00 and 2020-12-07 20:00:00 started
+2020-12-07 21:00:02,053 Scraping all for between 2020-12-07 19:00:00 and 2020-12-07 20:00:00 started
+2020-12-07 21:00:02,015 Scraping comment for between 2020-12-04 20:00:00 and 2020-12-04 21:00:00 started
+2020-12-07 21:00:02,027 Scraping comment for between 2020-12-04 20:00:00 and 2020-12-04 21:00:00 started
+2020-12-07 21:00:02,062 Scraping comment for between 2020-12-04 20:00:00 and 2020-12-04 21:00:00 started
+2020-12-07 21:04:50,056 Scraping all for between 2020-12-07 19:00:00 and 2020-12-07 20:00:00 fetched 149 submissions and 359 comments
+2020-12-07 21:05:06,491 Scraping all for between 2020-12-07 19:00:00 and 2020-12-07 20:00:00 fetched 186 submissions and 255 comments
+2020-12-07 21:05:21,487 Scraping all for between 2020-12-07 19:00:00 and 2020-12-07 20:00:00 fetched 192 submissions and 290 comments
+2020-12-07 21:05:57,287 Scraping comment for between 2020-12-04 20:00:00 and 2020-12-04 21:00:00 fetched 0 submissions and 545 comments
+2020-12-07 21:06:45,783 Scraping all for between 2020-12-07 19:00:00 and 2020-12-07 20:00:00 fetched 247 submissions and 363 comments
+2020-12-07 21:06:47,232 Scraping all for between 2020-12-07 19:00:00 and 2020-12-07 20:00:00 fetched 261 submissions and 358 comments
+2020-12-07 21:06:47,672 Scraping comment for between 2020-12-04 20:00:00 and 2020-12-04 21:00:00 fetched 0 submissions and 792 comments
+2020-12-07 21:06:49,129 Scraping comment for between 2020-12-04 20:00:00 and 2020-12-04 21:00:00 fetched 0 submissions and 613 comments
+2020-12-07 21:07:03,421 Scraping all for between 2020-12-07 19:00:00 and 2020-12-07 20:00:00 fetched 240 submissions and 393 comments
+2020-12-07 21:07:16,821 Scraping all for between 2020-12-07 19:00:00 and 2020-12-07 20:00:00 fetched 255 submissions and 387 comments
+2020-12-07 21:07:25,659 Scraping all for between 2020-12-07 19:00:00 and 2020-12-07 20:00:00 fetched 246 submissions and 436 comments
+2020-12-07 21:07:42,884 Scraping comment for between 2020-12-04 20:00:00 and 2020-12-04 21:00:00 fetched 0 submissions and 799 comments
+2020-12-07 21:08:15,245 Scraping comment for between 2020-12-04 20:00:00 and 2020-12-04 21:00:00 fetched 0 submissions and 873 comments
+2020-12-07 21:08:54,715 Scraping comment for between 2020-12-04 20:00:00 and 2020-12-04 21:00:00 fetched 0 submissions and 1043 comments
+2020-12-07 21:09:25,351 Scraping all for between 2020-12-07 19:00:00 and 2020-12-07 20:00:00 fetched 355 submissions and 527 comments
+2020-12-07 21:09:43,830 Scraping all for between 2020-12-07 19:00:00 and 2020-12-07 20:00:00 fetched 324 submissions and 614 comments
+2020-12-07 21:09:43,831 Fetching reddit information ended in 581.84s
+2020-12-07 21:11:28,622 Scraping comment for between 2020-12-04 20:00:00 and 2020-12-04 21:00:00 fetched 0 submissions and 1342 comments
+2020-12-07 21:13:18,552 Scraping comment for between 2020-12-04 20:00:00 and 2020-12-04 21:00:00 fetched 0 submissions and 1458 comments
+2020-12-07 21:13:35,007 Scraping comment for between 2020-12-04 20:00:00 and 2020-12-04 21:00:00 fetched 0 submissions and 1320 comments
+2020-12-07 21:17:10,057 Scraping comment for between 2020-12-04 20:00:00 and 2020-12-04 21:00:00 fetched 0 submissions and 1824 comments
+2020-12-07 21:17:10,058 Fetching reddit information ended in 1028.07s
+2020-12-07 21:17:10,059 Training for implicit recommendation model started
+2020-12-07 21:17:24,293 Training for implicit recommendation model ended
+2020-12-07 21:17:24,294 Loading Reddit Recommendation to Redis started
+2020-12-07 21:17:37,871 Loading Reddit Recommendation to Redis ended
+2020-12-07 21:17:37,916 DAG ended
+2020-12-07 22:00:00,392 DAG started
+2020-12-07 22:00:00,442 Creating full tables with sql/subreddit_stage.sql started
+2020-12-07 22:00:00,756 Successfully created full tables with sql/subreddit_stage.sql
+2020-12-07 22:00:00,756 Creating full tables with sql/subreddit_stage.sql ended
+2020-12-07 22:00:00,757 Creating parition tables for ds(2020-12-07) started
+2020-12-07 22:00:00,770 Successfully created partition table for ds(2020-12-07)
+2020-12-07 22:00:00,770 Creating parition tables for ds(2020-12-07) ended
+2020-12-07 22:00:01,759 Fetching reddit information started
+2020-12-07 22:00:01,759 Fetching reddit information started
+2020-12-07 22:00:01,764 Scraping comment for between 2020-12-04 21:00:00 and 2020-12-04 22:00:00 started
+2020-12-07 22:00:01,764 Scraping all for between 2020-12-07 20:00:00 and 2020-12-07 21:00:00 started
+2020-12-07 22:00:01,767 Scraping comment for between 2020-12-04 21:00:00 and 2020-12-04 22:00:00 started
+2020-12-07 22:00:01,767 Scraping all for between 2020-12-07 20:00:00 and 2020-12-07 21:00:00 started
+2020-12-07 22:00:01,768 Scraping all for between 2020-12-07 20:00:00 and 2020-12-07 21:00:00 started
+2020-12-07 22:00:01,768 Scraping comment for between 2020-12-04 21:00:00 and 2020-12-04 22:00:00 started
+2020-12-07 22:00:01,769 Scraping all for between 2020-12-07 20:00:00 and 2020-12-07 21:00:00 started
+2020-12-07 22:00:01,769 Scraping comment for between 2020-12-04 21:00:00 and 2020-12-04 22:00:00 started
+2020-12-07 22:00:01,774 Scraping comment for between 2020-12-04 21:00:00 and 2020-12-04 22:00:00 started
+2020-12-07 22:00:01,774 Scraping all for between 2020-12-07 20:00:00 and 2020-12-07 21:00:00 started
+2020-12-07 22:00:01,775 Scraping all for between 2020-12-07 20:00:00 and 2020-12-07 21:00:00 started
+2020-12-07 22:00:01,775 Scraping comment for between 2020-12-04 21:00:00 and 2020-12-04 22:00:00 started
+2020-12-07 22:00:01,776 Scraping all for between 2020-12-07 20:00:00 and 2020-12-07 21:00:00 started
+2020-12-07 22:00:01,775 Scraping comment for between 2020-12-04 21:00:00 and 2020-12-04 22:00:00 started
+2020-12-07 22:00:01,777 Scraping all for between 2020-12-07 20:00:00 and 2020-12-07 21:00:00 started
+2020-12-07 22:00:01,777 Scraping comment for between 2020-12-04 21:00:00 and 2020-12-04 22:00:00 started
+2020-12-07 22:00:01,778 Scraping all for between 2020-12-07 20:00:00 and 2020-12-07 21:00:00 started
+2020-12-07 22:00:01,778 Scraping comment for between 2020-12-04 21:00:00 and 2020-12-04 22:00:00 started
+2020-12-07 22:00:01,778 Scraping all for between 2020-12-07 20:00:00 and 2020-12-07 21:00:00 started
+2020-12-07 22:00:01,778 Scraping comment for between 2020-12-04 21:00:00 and 2020-12-04 22:00:00 started
+2020-12-07 22:04:42,883 Scraping all for between 2020-12-07 20:00:00 and 2020-12-07 21:00:00 fetched 166 submissions and 343 comments
+2020-12-07 22:05:56,337 Scraping all for between 2020-12-07 20:00:00 and 2020-12-07 21:00:00 fetched 225 submissions and 332 comments
+2020-12-07 22:06:44,577 Scraping all for between 2020-12-07 20:00:00 and 2020-12-07 21:00:00 fetched 208 submissions and 373 comments
+2020-12-07 22:06:48,419 Scraping all for between 2020-12-07 20:00:00 and 2020-12-07 21:00:00 fetched 244 submissions and 397 comments
+2020-12-07 22:07:54,712 Scraping all for between 2020-12-07 20:00:00 and 2020-12-07 21:00:00 fetched 262 submissions and 502 comments
+2020-12-07 22:08:04,867 Scraping all for between 2020-12-07 20:00:00 and 2020-12-07 21:00:00 fetched 283 submissions and 341 comments
+2020-12-07 22:08:47,883 Scraping comment for between 2020-12-04 21:00:00 and 2020-12-04 22:00:00 fetched 0 submissions and 913 comments
+2020-12-07 22:08:49,323 Scraping all for between 2020-12-07 20:00:00 and 2020-12-07 21:00:00 fetched 297 submissions and 475 comments
+2020-12-07 22:09:26,164 Scraping all for between 2020-12-07 20:00:00 and 2020-12-07 21:00:00 fetched 283 submissions and 455 comments
+2020-12-07 22:10:20,793 Scraping comment for between 2020-12-04 21:00:00 and 2020-12-04 22:00:00 fetched 0 submissions and 1098 comments
+2020-12-07 22:11:17,648 Scraping all for between 2020-12-07 20:00:00 and 2020-12-07 21:00:00 fetched 351 submissions and 601 comments
+2020-12-07 22:11:45,605 Scraping comment for between 2020-12-04 21:00:00 and 2020-12-04 22:00:00 fetched 0 submissions and 1396 comments
+2020-12-07 22:12:38,820 Scraping all for between 2020-12-07 20:00:00 and 2020-12-07 21:00:00 fetched 427 submissions and 810 comments
+2020-12-07 22:12:38,820 Fetching reddit information ended in 757.06s
+2020-12-07 22:14:08,227 Scraping comment for between 2020-12-04 21:00:00 and 2020-12-04 22:00:00 fetched 0 submissions and 1644 comments
+2020-12-07 22:14:09,009 Scraping comment for between 2020-12-04 21:00:00 and 2020-12-04 22:00:00 fetched 0 submissions and 1643 comments
+2020-12-07 22:14:24,672 Scraping comment for between 2020-12-04 21:00:00 and 2020-12-04 22:00:00 fetched 0 submissions and 1609 comments
+2020-12-07 22:14:26,337 Scraping comment for between 2020-12-04 21:00:00 and 2020-12-04 22:00:00 fetched 0 submissions and 1581 comments
+2020-12-07 22:17:20,524 Scraping comment for between 2020-12-04 21:00:00 and 2020-12-04 22:00:00 fetched 0 submissions and 1988 comments
+2020-12-07 22:18:36,160 Scraping comment for between 2020-12-04 21:00:00 and 2020-12-04 22:00:00 fetched 0 submissions and 2080 comments
+2020-12-07 22:23:15,431 Scraping comment for between 2020-12-04 21:00:00 and 2020-12-04 22:00:00 fetched 0 submissions and 2408 comments
+2020-12-07 22:23:15,431 Fetching reddit information ended in 1393.67s
+2020-12-07 22:23:15,432 Training for implicit recommendation model started
+2020-12-07 22:23:27,808 Training for implicit recommendation model ended
+2020-12-07 22:23:27,809 Loading Reddit Recommendation to Redis started
+2020-12-07 22:23:36,987 Loading Reddit Recommendation to Redis ended
+2020-12-07 22:23:37,024 DAG ended
+2020-12-07 23:00:00,178 DAG started
+2020-12-07 23:00:00,211 Creating full tables with sql/subreddit_stage.sql started
+2020-12-07 23:00:00,478 Successfully created full tables with sql/subreddit_stage.sql
+2020-12-07 23:00:00,478 Creating full tables with sql/subreddit_stage.sql ended
+2020-12-07 23:00:00,479 Creating parition tables for ds(2020-12-07) started
+2020-12-07 23:00:00,490 Successfully created partition table for ds(2020-12-07)
+2020-12-07 23:00:00,490 Creating parition tables for ds(2020-12-07) ended
+2020-12-07 23:00:01,482 Fetching reddit information started
+2020-12-07 23:00:01,482 Fetching reddit information started
+2020-12-07 23:00:01,498 Scraping all for between 2020-12-07 21:00:00 and 2020-12-07 22:00:00 started
+2020-12-07 23:00:01,498 Scraping comment for between 2020-12-04 22:00:00 and 2020-12-04 23:00:00 started
+2020-12-07 23:00:01,499 Scraping comment for between 2020-12-04 22:00:00 and 2020-12-04 23:00:00 started
+2020-12-07 23:00:01,499 Scraping all for between 2020-12-07 21:00:00 and 2020-12-07 22:00:00 started
+2020-12-07 23:00:01,499 Scraping all for between 2020-12-07 21:00:00 and 2020-12-07 22:00:00 started
+2020-12-07 23:00:01,502 Scraping all for between 2020-12-07 21:00:00 and 2020-12-07 22:00:00 started
+2020-12-07 23:00:01,501 Scraping comment for between 2020-12-04 22:00:00 and 2020-12-04 23:00:00 started
+2020-12-07 23:00:01,502 Scraping comment for between 2020-12-04 22:00:00 and 2020-12-04 23:00:00 started
+2020-12-07 23:00:01,509 Scraping all for between 2020-12-07 21:00:00 and 2020-12-07 22:00:00 started
+2020-12-07 23:00:01,509 Scraping comment for between 2020-12-04 22:00:00 and 2020-12-04 23:00:00 started
+2020-12-07 23:00:01,515 Scraping all for between 2020-12-07 21:00:00 and 2020-12-07 22:00:00 started
+2020-12-07 23:00:01,513 Scraping comment for between 2020-12-04 22:00:00 and 2020-12-04 23:00:00 started
+2020-12-07 23:00:01,516 Scraping all for between 2020-12-07 21:00:00 and 2020-12-07 22:00:00 started
+2020-12-07 23:00:01,518 Scraping all for between 2020-12-07 21:00:00 and 2020-12-07 22:00:00 started
+2020-12-07 23:00:01,515 Scraping comment for between 2020-12-04 22:00:00 and 2020-12-04 23:00:00 started
+2020-12-07 23:00:01,521 Scraping all for between 2020-12-07 21:00:00 and 2020-12-07 22:00:00 started
+2020-12-07 23:00:01,522 Scraping all for between 2020-12-07 21:00:00 and 2020-12-07 22:00:00 started
+2020-12-07 23:00:01,517 Scraping comment for between 2020-12-04 22:00:00 and 2020-12-04 23:00:00 started
+2020-12-07 23:00:01,518 Scraping comment for between 2020-12-04 22:00:00 and 2020-12-04 23:00:00 started
+2020-12-07 23:00:01,518 Scraping comment for between 2020-12-04 22:00:00 and 2020-12-04 23:00:00 started
+2020-12-07 23:05:32,514 Scraping all for between 2020-12-07 21:00:00 and 2020-12-07 22:00:00 fetched 183 submissions and 362 comments
+2020-12-07 23:06:06,644 Scraping all for between 2020-12-07 21:00:00 and 2020-12-07 22:00:00 fetched 203 submissions and 376 comments
+2020-12-07 23:08:06,027 Scraping all for between 2020-12-07 21:00:00 and 2020-12-07 22:00:00 fetched 284 submissions and 476 comments
+2020-12-07 23:08:06,446 Scraping all for between 2020-12-07 21:00:00 and 2020-12-07 22:00:00 fetched 283 submissions and 456 comments
+2020-12-07 23:08:23,877 Scraping all for between 2020-12-07 21:00:00 and 2020-12-07 22:00:00 fetched 290 submissions and 548 comments
+2020-12-07 23:08:44,724 Scraping all for between 2020-12-07 21:00:00 and 2020-12-07 22:00:00 fetched 308 submissions and 520 comments
+2020-12-07 23:08:51,713 Scraping all for between 2020-12-07 21:00:00 and 2020-12-07 22:00:00 fetched 287 submissions and 509 comments
+2020-12-07 23:09:42,899 Scraping all for between 2020-12-07 21:00:00 and 2020-12-07 22:00:00 fetched 317 submissions and 608 comments
+2020-12-07 23:10:48,052 Scraping all for between 2020-12-07 21:00:00 and 2020-12-07 22:00:00 fetched 373 submissions and 614 comments
+2020-12-07 23:12:50,848 Scraping comment for between 2020-12-04 22:00:00 and 2020-12-04 23:00:00 fetched 0 submissions and 1536 comments
+2020-12-07 23:13:00,445 Scraping comment for between 2020-12-04 22:00:00 and 2020-12-04 23:00:00 fetched 0 submissions and 1317 comments
+2020-12-07 23:13:49,351 Scraping all for between 2020-12-07 21:00:00 and 2020-12-07 22:00:00 fetched 481 submissions and 794 comments
+2020-12-07 23:13:49,352 Fetching reddit information ended in 827.87s
+2020-12-07 23:14:19,634 Scraping comment for between 2020-12-04 22:00:00 and 2020-12-04 23:00:00 fetched 0 submissions and 1468 comments
+2020-12-07 23:14:25,673 Scraping comment for between 2020-12-04 22:00:00 and 2020-12-04 23:00:00 fetched 0 submissions and 1586 comments
+2020-12-07 23:17:16,811 Scraping comment for between 2020-12-04 22:00:00 and 2020-12-04 23:00:00 fetched 0 submissions and 1632 comments
+2020-12-07 23:17:20,404 Scraping comment for between 2020-12-04 22:00:00 and 2020-12-04 23:00:00 fetched 0 submissions and 1933 comments
+2020-12-07 23:20:17,234 Scraping comment for between 2020-12-04 22:00:00 and 2020-12-04 23:00:00 fetched 0 submissions and 2167 comments
+2020-12-07 23:26:46,593 Scraping comment for between 2020-12-04 22:00:00 and 2020-12-04 23:00:00 fetched 0 submissions and 2986 comments
+2020-12-07 23:27:03,064 Scraping comment for between 2020-12-04 22:00:00 and 2020-12-04 23:00:00 fetched 0 submissions and 2968 comments
+2020-12-07 23:27:19,716 Scraping comment for between 2020-12-04 22:00:00 and 2020-12-04 23:00:00 fetched 0 submissions and 3057 comments
+2020-12-07 23:27:19,717 Fetching reddit information ended in 1638.24s
+2020-12-07 23:27:19,721 Training for implicit recommendation model started
+2020-12-07 23:27:36,558 Training for implicit recommendation model ended
+2020-12-07 23:27:36,560 Loading Reddit Recommendation to Redis started
+2020-12-07 23:27:53,843 Loading Reddit Recommendation to Redis ended
+2020-12-07 23:27:53,915 DAG ended
+2020-12-08 00:00:00,921 DAG started
+2020-12-08 00:00:00,955 Creating full tables with sql/subreddit_stage.sql started
+2020-12-08 00:00:01,265 Successfully created full tables with sql/subreddit_stage.sql
+2020-12-08 00:00:01,265 Creating full tables with sql/subreddit_stage.sql ended
+2020-12-08 00:00:01,268 Creating parition tables for ds(2020-12-07) started
+2020-12-08 00:00:01,299 Successfully created partition table for ds(2020-12-07)
+2020-12-08 00:00:01,299 Creating parition tables for ds(2020-12-07) ended
+2020-12-08 00:00:02,270 Fetching reddit information started
+2020-12-08 00:00:02,270 Fetching reddit information started
+2020-12-08 00:00:02,285 Scraping comment for between 2020-12-04 23:00:00 and 2020-12-05 00:00:00 started
+2020-12-08 00:00:02,285 Scraping all for between 2020-12-07 22:00:00 and 2020-12-07 23:00:00 started
+2020-12-08 00:00:02,286 Scraping all for between 2020-12-07 22:00:00 and 2020-12-07 23:00:00 started
+2020-12-08 00:00:02,287 Scraping comment for between 2020-12-04 23:00:00 and 2020-12-05 00:00:00 started
+2020-12-08 00:00:02,288 Scraping comment for between 2020-12-04 23:00:00 and 2020-12-05 00:00:00 started
+2020-12-08 00:00:02,289 Scraping all for between 2020-12-07 22:00:00 and 2020-12-07 23:00:00 started
+2020-12-08 00:00:02,289 Scraping comment for between 2020-12-04 23:00:00 and 2020-12-05 00:00:00 started
+2020-12-08 00:00:02,296 Scraping comment for between 2020-12-04 23:00:00 and 2020-12-05 00:00:00 started
+2020-12-08 00:00:02,290 Scraping all for between 2020-12-07 22:00:00 and 2020-12-07 23:00:00 started
+2020-12-08 00:00:02,297 Scraping all for between 2020-12-07 22:00:00 and 2020-12-07 23:00:00 started
+2020-12-08 00:00:02,297 Scraping comment for between 2020-12-04 23:00:00 and 2020-12-05 00:00:00 started
+2020-12-08 00:00:02,303 Scraping all for between 2020-12-07 22:00:00 and 2020-12-07 23:00:00 started
+2020-12-08 00:00:02,302 Scraping comment for between 2020-12-04 23:00:00 and 2020-12-05 00:00:00 started
+2020-12-08 00:00:02,305 Scraping all for between 2020-12-07 22:00:00 and 2020-12-07 23:00:00 started
+2020-12-08 00:00:02,305 Scraping all for between 2020-12-07 22:00:00 and 2020-12-07 23:00:00 started
+2020-12-08 00:00:02,305 Scraping comment for between 2020-12-04 23:00:00 and 2020-12-05 00:00:00 started
+2020-12-08 00:00:02,307 Scraping all for between 2020-12-07 22:00:00 and 2020-12-07 23:00:00 started
+2020-12-08 00:00:02,307 Scraping comment for between 2020-12-04 23:00:00 and 2020-12-05 00:00:00 started
+2020-12-08 00:00:02,309 Scraping all for between 2020-12-07 22:00:00 and 2020-12-07 23:00:00 started
+2020-12-08 00:00:02,309 Scraping comment for between 2020-12-04 23:00:00 and 2020-12-05 00:00:00 started
+2020-12-08 00:06:41,653 Scraping all for between 2020-12-07 22:00:00 and 2020-12-07 23:00:00 fetched 221 submissions and 425 comments
+2020-12-08 00:09:02,287 Scraping all for between 2020-12-07 22:00:00 and 2020-12-07 23:00:00 fetched 319 submissions and 580 comments
+2020-12-08 00:09:12,948 Scraping all for between 2020-12-07 22:00:00 and 2020-12-07 23:00:00 fetched 331 submissions and 575 comments
+2020-12-08 00:09:13,343 Scraping all for between 2020-12-07 22:00:00 and 2020-12-07 23:00:00 fetched 321 submissions and 582 comments
+2020-12-08 00:09:15,227 Scraping all for between 2020-12-07 22:00:00 and 2020-12-07 23:00:00 fetched 306 submissions and 578 comments
+2020-12-08 00:09:33,877 Scraping all for between 2020-12-07 22:00:00 and 2020-12-07 23:00:00 fetched 332 submissions and 523 comments
+2020-12-08 00:10:58,742 Scraping all for between 2020-12-07 22:00:00 and 2020-12-07 23:00:00 fetched 417 submissions and 624 comments
+2020-12-08 00:11:44,458 Scraping all for between 2020-12-07 22:00:00 and 2020-12-07 23:00:00 fetched 371 submissions and 700 comments
+2020-12-08 00:12:29,901 Scraping comment for between 2020-12-04 23:00:00 and 2020-12-05 00:00:00 fetched 0 submissions and 1334 comments
+2020-12-08 00:12:47,790 Scraping all for between 2020-12-07 22:00:00 and 2020-12-07 23:00:00 fetched 426 submissions and 808 comments
+2020-12-08 00:14:14,911 Scraping comment for between 2020-12-04 23:00:00 and 2020-12-05 00:00:00 fetched 0 submissions and 1462 comments
+2020-12-08 00:14:20,576 Scraping comment for between 2020-12-04 23:00:00 and 2020-12-05 00:00:00 fetched 0 submissions and 1436 comments
+2020-12-08 00:18:00,365 Scraping comment for between 2020-12-04 23:00:00 and 2020-12-05 00:00:00 fetched 0 submissions and 1938 comments
+2020-12-08 00:18:47,908 Scraping all for between 2020-12-07 22:00:00 and 2020-12-07 23:00:00 fetched 537 submissions and 922 comments
+2020-12-08 00:18:47,908 Fetching reddit information ended in 1125.64s
+2020-12-08 00:20:25,124 Scraping comment for between 2020-12-04 23:00:00 and 2020-12-05 00:00:00 fetched 0 submissions and 1879 comments
+2020-12-08 00:23:44,092 Scraping comment for between 2020-12-04 23:00:00 and 2020-12-05 00:00:00 fetched 0 submissions and 2643 comments
+2020-12-08 00:24:47,327 Scraping comment for between 2020-12-04 23:00:00 and 2020-12-05 00:00:00 fetched 0 submissions and 2574 comments
+2020-12-08 00:26:53,983 Scraping comment for between 2020-12-04 23:00:00 and 2020-12-05 00:00:00 fetched 0 submissions and 2707 comments
+2020-12-08 00:28:02,886 Scraping comment for between 2020-12-04 23:00:00 and 2020-12-05 00:00:00 fetched 0 submissions and 2209 comments
+2020-12-08 00:29:10,106 Scraping comment for between 2020-12-04 23:00:00 and 2020-12-05 00:00:00 fetched 0 submissions and 3211 comments
+2020-12-08 00:29:10,106 Fetching reddit information ended in 1747.84s
+2020-12-08 00:29:10,107 Training for implicit recommendation model started
+2020-12-08 00:29:22,623 Training for implicit recommendation model ended
+2020-12-08 00:29:22,623 Loading Reddit Recommendation to Redis started
+2020-12-08 00:29:31,584 Loading Reddit Recommendation to Redis ended
+2020-12-08 00:29:31,614 DAG ended
