@@ -138,7 +138,7 @@ class DAG:
 
     def run(self):
         logging.critical("DAG started")
-        
+
         # Get current timestamp
         now = dt.datetime.now()
 

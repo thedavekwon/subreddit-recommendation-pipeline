@@ -16,9 +16,9 @@ if __name__ == "__main__":
 
     # Extract from Reddit
     fetch_reddit_now = Task("fetch_reddit_now", fr.fetch_reddit, [False], dag, True)
-    
+
     fetch_reddit_past = Task("fetch_reddit_past", fr.fetch_reddit, [True], dag, True)
-    
+
     # Train recommendation implicit model
     train_model_implicit = Task("train_model_implicit", train.train_implicit, None, dag)
 
@@ -31,7 +31,8 @@ if __name__ == "__main__":
     # dag.draw()
 
     # Run once
-    # dag.run()
+    # if not dag.check_cycle():
+    #     dag.run()
 
     # Run scheduler if cycle does not exist in DAG
     if not dag.check_cycle():

@@ -1,3 +1,6 @@
+-- Redit API does not have documnetation on the maximum length of each field. 
+-- We simply just use VARCHAR(255) for string fields. 
+
 CREATE TABLE IF NOT EXISTS redditor
 (
     id   VARCHAR(255) PRIMARY KEY NOT NULL,
@@ -53,14 +56,11 @@ CREATE TABLE IF NOT EXISTS redditor_subreddit_comment
     FOREIGN KEY (comment_id) REFERENCES comment (id)
 ) PARTITION BY LIST (ds);
 
-CREATE INDEX ON redditor_subreddit_submission (ds);
-CREATE INDEX ON redditor_subreddit_comment (ds);
+CREATE INDEX IF NOT EXISTS ON redditor_subreddit_submission (ds);
+CREATE INDEX IF NOT EXISTS ON redditor_subreddit_comment (ds);
 
 /* CREATE TABLE IF NOT EXISTS redditor_subreddit_comment_2020_01_01 PARTITION OF redditor_subreddit_comment
     FOR VALUES IN ('2020-01-01');
 
 CREATE TABLE IF NOT EXISTS redditor_subreddit_submission_2020_01_01 PARTITION OF redditor_subreddit_submission
-    FOR VALUES IN ('2020-01-01');
-
-drop schema public cascade;
-create schema public; */
+    FOR VALUES IN ('2020-01-01'); */

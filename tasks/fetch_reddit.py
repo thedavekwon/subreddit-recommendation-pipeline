@@ -64,7 +64,7 @@ class RedditScraper:
             ),
         )
 
-    def upload(self, only_comment):
+    def upload(self, fetch_past):
         redditors = {}
         submissions = {}
         subreddits = {}
@@ -83,7 +83,7 @@ class RedditScraper:
                     or not s.author.id
                 ):
                     continue
-                if not only_comment:
+                if not fetch_past:
                     redditors[s.author.id] = parse_redditor(s.author)
                     submissions[s.submission.id] = {
                         "id": s.submission.id,
@@ -139,7 +139,7 @@ class RedditScraper:
                 .values(list(redditors.values()))
                 .on_conflict_do_nothing()
             )
-            if not only_comment:
+            if not fetch_past:
                 self.session.execute(
                     insert(m.Submission)
                     .values(list(submissions.values()))
@@ -174,30 +174,23 @@ class RedditScraper:
         return len(redditor_subreddit_submissions), len(redditor_subreddit_comments)
 
 
-def scrape(only_comment, subreddit_list, ds, after, before, config):
-    temp_str = "all" if not only_comment else "comment"
-    try:
-        logging.critical(
-            f"Scraping {temp_str} for between {after} and {before} started"
-        )
-        rs = RedditScraper(
-            subreddit_list, ds, int(after.timestamp()), int(before.timestamp()), config
-        )
-        rs.get_submissions()
-        len_submissions, len_comments = rs.upload(only_comment)
-        logging.critical(
-            f"Scraping {temp_str} for between {after} and {before} fetched {len_submissions} submissions and {len_comments} comments"
-        )
-    except Exception as e:
-        logging.error(
-            f"An error has occurred for Scraping {temp_str} for between {after} and {before}: {e}"
-        )
+def scrape(fetch_past, subreddit_list, ds, after, before, config):
+    temp_str = "all" if not fetch_past else "comment"
+    logging.critical(f"Scraping {temp_str} for between {after} and {before} started")
+    rs = RedditScraper(
+        subreddit_list, ds, int(after.timestamp()), int(before.timestamp()), config
+    )
+    rs.get_submissions()
+    len_submissions, len_comments = rs.upload(fetch_past)
+    logging.critical(
+        f"Scraping {temp_str} for between {after} and {before} fetched {len_submissions} submissions and {len_comments} comments"
+    )
 
 
-def fetch_reddit(only_comment, now):
+def fetch_reddit(fetch_past, now):
     cur = dt.datetime.now()
     logging.critical("Fetching reddit information started")
-    delta = dt.timedelta(hours=-1) if not only_comment else dt.timedelta(days=-3)
+    delta = dt.timedelta(hours=-1) if not fetch_past else dt.timedelta(days=-3)
     before = dt.datetime(now.year, now.month, now.day, now.hour) + delta
     after = before + dt.timedelta(hours=-1)
     ds = now.strftime("%Y-%m-%d")
@@ -215,7 +208,7 @@ def fetch_reddit(only_comment, now):
     with concurrent.futures.ThreadPoolExecutor() as executor:
         for subreddit_list in subreddit_lists:
             executor.submit(
-                scrape, only_comment, subreddit_list, ds, after, before, config
+                scrape, fetch_past, subreddit_list, ds, after, before, config
             )
     logging.critical(
         f"Fetching reddit information ended in {round((dt.datetime.now()-cur).total_seconds(), 2)}s"
@@ -226,7 +219,7 @@ if __name__ == "__main__":
     logging.getLogger().setLevel(logging.ERROR)
     config = configparser.ConfigParser()
     config.read("config/config.ini")
-    # for i in range(12, 13):
-    #     for j in range(5, 32):
-    #         for k in range(0, 24):
-    #             fetch_reddit(False, dt.datetime(2020, i, j, k))
+    for i in range(12, 13):
+        for j in range(7, 32):
+            for k in range(2, 24):
+                fetch_reddit(False, dt.datetime(2020, i, j, k))

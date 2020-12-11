@@ -4,6 +4,7 @@ __pycache__/
 *.py[cod]
 
 .vscode/
+.pytest_cache/
 
 config/config.ini
 tasks/test.py
