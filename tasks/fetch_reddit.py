@@ -34,7 +34,7 @@ class RedditSubmission:
         self.comments = submission.comments
         # Flatten comments
         self.comments.replace_more(limit=None)
-
+        # Filter deleted comments
         self.comments = list(filter(lambda x: x.author, self.comments))
 
 
@@ -176,20 +176,20 @@ class RedditScraper:
 
 def scrape(fetch_past, subreddit_list, ds, after, before, config):
     temp_str = "all" if not fetch_past else "comment"
-    logging.critical(f"Scraping {temp_str} for between {after} and {before} started")
+    logging.info(f"Scraping {temp_str} for between {after} and {before} started")
     rs = RedditScraper(
         subreddit_list, ds, int(after.timestamp()), int(before.timestamp()), config
     )
     rs.get_submissions()
     len_submissions, len_comments = rs.upload(fetch_past)
-    logging.critical(
+    logging.info(
         f"Scraping {temp_str} for between {after} and {before} fetched {len_submissions} submissions and {len_comments} comments"
     )
 
 
 def fetch_reddit(fetch_past, now):
     cur = dt.datetime.now()
-    logging.critical("Fetching reddit information started")
+    logging.info("Fetching reddit information started")
     delta = dt.timedelta(hours=-1) if not fetch_past else dt.timedelta(days=-3)
     before = dt.datetime(now.year, now.month, now.day, now.hour) + delta
     after = before + dt.timedelta(hours=-1)
@@ -205,12 +205,14 @@ def fetch_reddit(fetch_past, now):
     if not len(subreddit_list):
         raise Exception("Empty subreddit list")
     subreddit_lists = np.array_split(subreddit_list, num_threads)
+
+    # Multi-Threading pool for Network I/O bound
     with concurrent.futures.ThreadPoolExecutor() as executor:
         for subreddit_list in subreddit_lists:
             executor.submit(
                 scrape, fetch_past, subreddit_list, ds, after, before, config
             )
-    logging.critical(
+    logging.info(
         f"Fetching reddit information ended in {round((dt.datetime.now()-cur).total_seconds(), 2)}s"
     )
 
@@ -219,7 +221,4 @@ if __name__ == "__main__":
     logging.getLogger().setLevel(logging.ERROR)
     config = configparser.ConfigParser()
     config.read("config/config.ini")
-    for i in range(12, 13):
-        for j in range(7, 32):
-            for k in range(2, 24):
-                fetch_reddit(False, dt.datetime(2020, i, j, k))
+    # fetch_reddit(False, dt.datetime(2020, i, j, k))

@@ -9,10 +9,14 @@ from sqlalchemy.orm import Session
 
 
 def create_partition_table(now):
+    """
+    create partition tables for redditor_subreddit_submission and redditor_subreddit_comment
+    with the current ds.
+    """
     ds = (
         dt.datetime(now.year, now.month, now.day, now.hour) + dt.timedelta(hours=-1)
     ).strftime("%Y-%m-%d")
-    logging.critical(f"Creating parition tables for ds({ds}) started")
+    logging.info(f"Creating parition tables for ds({ds}) started")
     config = configparser.ConfigParser()
     config.read("config/config.ini")
     db = create_engine(config["DB"].get("db_url"))
@@ -29,18 +33,21 @@ def create_partition_table(now):
         session.execute(redditor_subreddit_submission_string)
         session.execute(redditor_subreddit_comment_string)
         session.commit()
-        logging.critical(f"Successfully created partition table for ds({ds})")
+        logging.info(f"Successfully created partition table for ds({ds})")
     except:
         logging.error(f"Failed to create partition table for ds({ds})")
         session.rollback()
     finally:
         session.close()
 
-    logging.critical(f"Creating parition tables for ds({ds}) ended")
+    logging.info(f"Creating parition tables for ds({ds}) ended")
 
 
 def create_table(path):
-    logging.critical(f"Creating full tables with {path} started")
+    """
+    create tables with using sql file.
+    """
+    logging.info(f"Creating full tables with {path} started")
     config = configparser.ConfigParser()
     config.read("config/config.ini")
     db = create_engine(config["DB"].get("db_url"))
@@ -49,13 +56,13 @@ def create_table(path):
     try:
         session.execute(sqlalchemy.text(sql_file.read()))
         session.commit()
-        logging.critical(f"Successfully created full tables with {path}")
+        logging.info(f"Successfully created full tables with {path}")
     except:
         logging.error(f"Failed to create full tables with {path}")
         session.rollback()
     finally:
         session.close()
-    logging.critical(f"Creating full tables with {path} ended")
+    logging.info(f"Creating full tables with {path} ended")
 
 
 if __name__ == "__main__":

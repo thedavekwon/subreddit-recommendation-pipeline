@@ -16,12 +16,16 @@ from implicit.nearest_neighbours import bm25_weight
 
 
 def train_implicit():
-    logging.critical("Training for implicit recommendation model started")
+    logging.info("Training for implicit recommendation model started")
+
     config = configparser.ConfigParser()
     config.read("config/config.ini")
+
+    # Create SQLAlchemy Session
     engine = create_engine(config["DB"].get("db_url"))
     session = Session(engine)
 
+    # Get users who commented on more than two different subreddits
     s = (
         session.query(m.Redditor_Subreddit_Comment.redditor_id)
         .group_by(m.Redditor_Subreddit_Comment.redditor_id)
@@ -55,6 +59,8 @@ def train_implicit():
     )
     # Remove multi-level index
     df.columns = df.columns.levels[1]
+
+    # Create Redis Client
     r = redis.Redis(
         host=config["REDIS"].get("host"),
         port=config["REDIS"].get("port"),
@@ -68,8 +74,8 @@ def train_implicit():
     # bm25 weights
     ratings = (bm25_weight(ratings)).tocsr()
     model.fit(ratings)
-    logging.critical("Training for implicit recommendation model ended")
-    logging.critical("Loading Reddit Recommendation to Redis started")
+    logging.info("Training for implicit recommendation model ended")
+    logging.info("Loading Reddit Recommendation to Redis started")
     for user_id in range(len(df.index)):
         recommends = model.recommend(user_id, user_item, recalculate_user=False, N=5)
         user_item_recommend = [df.columns[r] for r, s in recommends]
@@ -77,7 +83,7 @@ def train_implicit():
         r.delete(df.index[user_id])
         for subreddit in user_item_recommend:
             r.rpush(df.index[user_id], subreddit)
-    logging.critical("Loading Reddit Recommendation to Redis ended")
+    logging.info("Loading Reddit Recommendation to Redis ended")
     return df.shape
 
 

@@ -14,12 +14,13 @@ if __name__ == "__main__":
         "create_partition_table", ct.create_partition_table, None, dag, True
     )
 
-    # Extract from Reddit
+    # Extract from Reddit for today
     fetch_reddit_now = Task("fetch_reddit_now", fr.fetch_reddit, [False], dag, True)
-
+    
+    # Extract from Reddit for three days before
     fetch_reddit_past = Task("fetch_reddit_past", fr.fetch_reddit, [True], dag, True)
 
-    # Train recommendation implicit model
+    # Train recommendation model
     train_model_implicit = Task("train_model_implicit", train.train_implicit, None, dag)
 
     create_table.add_edge(create_partition_table)

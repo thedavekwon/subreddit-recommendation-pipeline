@@ -8,7 +8,7 @@ import schedule
 import networkx as nx
 import matplotlib.pyplot as plt
 
-logging.getLogger().setLevel(logging.CRITICAL)
+logging.getLogger().setLevel(logging.INFO)
 LOG_FORMAT = "%(asctime)-15s %(message)s"
 logging.basicConfig(format=LOG_FORMAT)
 fh = logging.FileHandler("log/log.log")
@@ -19,6 +19,9 @@ logging.getLogger().addHandler(fh)
 
 class Task:
     def __init__(self, id, task, params, dag, need_dt=False):
+        """
+        Task id should be unique in DAG.
+        """
         if not isinstance(dag, DAG):
             raise Exception(f"Invalid DAG: {dag}")
         if not id:
@@ -51,6 +54,9 @@ class Task:
 
 class DAG:
     def __init__(self, id, hour):
+        """
+        Run DAG scheduler every hour.
+        """
         self.id = id
         self.hour = hour
         self.adj_list = {}
@@ -137,11 +143,11 @@ class DAG:
                 ] = task
 
     def run(self):
-        logging.critical("DAG started")
+        logging.info("DAG started")
 
         # Get current timestamp
         now = dt.datetime.now()
-
+        
         executor = concurrent.futures.ProcessPoolExecutor()
 
         # Reset
@@ -164,10 +170,10 @@ class DAG:
                 ready_tasks = self.get_ready_task(tasks, future_to_task)
                 self.insert_tasks(executor, future_to_task, ready_tasks, now)
         executor.shutdown()
-        logging.critical("DAG ended")
+        logging.info("DAG ended")
 
     def run_scheduler(self):
-        logging.critical("Scheduler Started")
+        logging.info("Scheduler Started")
         schedule.every(self.hour).hour.at(":00").do(self.run)
         while True:
             schedule.run_pending()

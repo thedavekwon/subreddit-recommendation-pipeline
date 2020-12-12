@@ -1,6 +1,10 @@
 from lib.dag import Task, DAG
 
+
 def test_dag_cyclic_true():
+    """
+    Cyclic DAG
+    """
     d = DAG("test", 1)
     t1 = Task("1", None, None, d)
     t2 = Task("2", None, None, d)
@@ -11,8 +15,12 @@ def test_dag_cyclic_true():
     t3.add_edge(t4)
     t4.add_edge(t1)
     assert d.check_cycle()
-    
+
+
 def test_dag_cyclic_false():
+    """
+    Acyclic DAG
+    """
     d = DAG("test", 1)
     t1 = Task("1", None, None, d)
     t2 = Task("2", None, None, d)
