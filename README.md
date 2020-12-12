@@ -1,4 +1,8 @@
 # Subreddit Recommendation ETL Pipeline
+Final Project for ECE-464 Database for Cooper Union.
+
+This project consists of a generalized ETL pipeline with DAG scheduler to create a subreddit recommendation data pipeline. It stages data into PostgreSQL and stores recommendation in Redis. The recommendations are generated using a collaborative filtering method for an implict feedback. 
+
 ## Requirements
 * PostgreSQL
 * Redis
