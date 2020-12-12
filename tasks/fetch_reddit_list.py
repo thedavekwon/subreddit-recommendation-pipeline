@@ -1,3 +1,4 @@
+import configparser
 import requests
 
 from bs4 import BeautifulSoup
@@ -27,4 +28,6 @@ def generate_subreddit_list(subreddit_list_path: str, to_file: bool):
 
 
 if __name__ == "__main__":
-    generate_subreddit_list("data/subreddits.csv", True)
+    config = configparser.ConfigParser()
+    config.read("config/config.ini")
+    generate_subreddit_list(config["REDDIT"].get("subreddit_list_path"), True)
